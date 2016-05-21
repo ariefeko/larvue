@@ -1,3 +1,5 @@
+Simple CRUD Using Laravel and Vue.js, search and other features will be added soon
+
 # How to Install
 1. Clone or download
 2. composer install
