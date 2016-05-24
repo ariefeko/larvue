@@ -1,4 +1,5 @@
 Vue.config.debug = true;
+// Regex (Regular Expression) for email validation
 var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 var vm = new Vue({
@@ -45,6 +46,7 @@ var vm = new Vue({
     computed: {
         validation: function () {
             return {
+                // !! (convert right value into boolean type)
                 name: !!this.newUser.name.trim(),
                 email: emailRE.test(this.newUser.email),
                 address: !!this.newUser.address.trim()
