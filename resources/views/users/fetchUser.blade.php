@@ -33,10 +33,14 @@
             </div>
             <div class="form-group">
                 <div class="col-md-9 col-md-offset-4">
-                    <input :disabled="!isValid" type="submit" class="btn btn-default" value="Add New User">
+                    <button :disabled="!isValid" type="submit" class="btn btn-default" v-if="!edit">Add New User</button>
+
+                    <button :disabled="!isValid" type="submit" class="btn btn-default" v-if="edit" @click="EditUser(newUser.id)">Edit User</button>
                 </div>
             </div>
         {!! Form::close() !!}
+
+        <div class="alert alert-success" transition="success" v-if="success">Add new user successfully.</div>
 
         <hr>
 
@@ -48,16 +52,21 @@
                 <th>ADDRESS</th>
                 <th>CREATED AT</th>
                 <th>UPDATED AT</th>
+                <th>CONTROLLER</th>
             </thead>
 
             <tbody>
-                <tr v-for="user in users">
+                <tr v-for="user in users" debounce="500">
                     <td>@{{ user.id }}</td>
                     <td>@{{ user.name }}</td>
                     <td>@{{ user.email }}</td>
                     <td>@{{ user.address }}</td>
                     <td>@{{ user.created_at }}</td>
                     <td>@{{ user.updated_at }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" @click="ShowUser(user.id)">Edit</button>
+                        <button class="btn btn-danger btn-sm">Remove</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -67,4 +76,13 @@
 
 @push('scripts')
     <script src="/js/script.js"></script>
+
+    <style>
+        .success-transition {
+            transition: all .5s ease-out;
+        }
+        .success.enter, .success.leave {
+            opacity: 0;
+        }
+    </style>
 @endpush
