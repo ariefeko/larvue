@@ -3,20 +3,24 @@
 Route::resource('/', 'UserController');
 
 // API
-Route::get('/api/users', function(){
-    return App\User::latest()->get();
-});
+Route::group(['prefix' => '/api/users'], function () {
 
-Route::post('/api/users', function() {
-    return App\User::create(Request::all());
-});
+    Route::match(['GET', 'POST'], '/', function () {
+        if(Request::isMethod('GET')){
+            return App\User::latest()->get();
+        }else{
+            return App\User::create(Request::all());
+        }
+    });
 
-Route::get('/api/users/{id}', function ($id) {
-    return App\User::findOrFail($id);
-});
-
-Route::patch('/api/users/{id}', function ($id) {
-    // dd("ini patch");
-    App\User::findOrFail($id)->update(Request::all());
-    return Response::json(Request::all());
+    Route::match(['GET', 'PATCH', 'DELETE'], '/{id}', function ($id) {
+        if(Request::isMethod('GET')){
+            return App\User::findOrFail($id);
+        }elseif(Request::isMethod('PATCH')){
+            App\User::findOrFail($id)->update(Request::all());
+            return Response::json(Request::all());
+        }else{
+            App\User::findOrFail($id)->delete();
+        }
+    });
 });

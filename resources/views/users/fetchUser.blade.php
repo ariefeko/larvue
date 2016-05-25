@@ -65,7 +65,7 @@
                     <td>@{{ user.updated_at }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" @click="ShowUser(user.id)">Edit</button>
-                        <button class="btn btn-danger btn-sm">Remove</button>
+                        <button class="btn btn-danger btn-sm" @click="RemoveUser(user.id)">Remove</button>
                     </td>
                 </tr>
             </tbody>

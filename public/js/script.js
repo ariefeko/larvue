@@ -30,6 +30,15 @@ var vm = new Vue({
             })
         },
 
+        RemoveUser: function (id) {
+            var ConfirmBox = confirm("Are you sure, you want to remove this User?")
+
+            if(ConfirmBox) this.$http.delete('/api/users/' + id)
+
+            // this.fetchUser()
+            window.location.reload()
+        },
+
         EditUser: function (id) {
             var user = this.newUser
 
